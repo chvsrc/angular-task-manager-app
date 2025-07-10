@@ -1,1 +1,6 @@
-<p>task-list works!</p>
+<ul>
+  <li *ngFor="let task of taskList">
+    <input type="checkbox" [(ngModel)]="task.done" />
+    <p [ngClass]="{ 'completed': task.done }">{{ task.name }}</p>
+  </li>
+</ul>
