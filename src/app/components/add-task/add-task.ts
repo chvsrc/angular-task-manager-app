@@ -1,23 +1,28 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task';
 
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './add-task.html',
   styleUrls: ['./add-task.css']
 })
 export class AddTaskComponent {
-  taskName: string = '';
+  taskForm: FormGroup;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private fb: FormBuilder, private taskService: TaskService) {
+    this.taskForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   addTask() {
-    if (this.taskName.trim()) {
-      this.taskService.addTask(this.taskName);
-      this.taskName = '';
+    if (this.taskForm.valid) {
+      const taskName = this.taskForm.value.name;
+      this.taskService.addTask(taskName);
+      this.taskForm.reset();
     }
   }
 }
