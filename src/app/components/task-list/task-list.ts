@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
@@ -10,10 +10,14 @@ import { TaskService } from '../../services/task';
   templateUrl: './task-list.html',
   styleUrls: ['./task-list.css']
 })
-export class TaskListComponent {
-  constructor(public taskService: TaskService) {}
+export class TaskListComponent implements OnInit {
+  taskList: any[] = [];
 
-  get taskList() {
-    return this.taskService.getTasks();
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit(): void {
+    this.taskService.getTasks().subscribe(data => {
+      this.taskList = data.slice(0, 5); // Limit to 5 for demo
+    });
   }
 }

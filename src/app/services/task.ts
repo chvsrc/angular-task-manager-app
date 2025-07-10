@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'  // ✅ Makes it globally available
+  providedIn: 'root'
 })
 export class TaskService {
-  private tasks: { name: string; done: boolean }[] = [];
+  private apiUrl = 'https://jsonplaceholder.typicode.com/todos'; // Mock endpoint
 
-  getTasks() {
-    return this.tasks;
+  constructor(private http: HttpClient) {}
+
+  getTasks(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  addTask(name: string) {
-    this.tasks.push({ name, done: false });
-  }
-
-  clearCompleted() {
-    this.tasks = this.tasks.filter(task => !task.done);
+  addTask(name: string): Observable<any> {
+    const newTask = { title: name, completed: false };
+    return this.http.post<any>(this.apiUrl, newTask);
   }
 }
