@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TaskService } from '../../services/task';
 
 @Component({
   selector: 'app-task-list',
@@ -10,8 +11,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./task-list.css']
 })
 export class TaskListComponent {
-  taskList = [
-    { name: 'Learn Angular', done: false },
-    { name: 'Build Task App', done: true }
-  ];
+  constructor(public taskService: TaskService) {}
+
+  get taskList() {
+    return this.taskService.getTasks();
+  }
 }
