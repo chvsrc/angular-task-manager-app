@@ -1,3 +1,8 @@
 <h1>Angular Task Manager</h1>
-<app-add-task></app-add-task>
-<app-task-list></app-task-list>
+
+<nav>
+  <a routerLink="/add" routerLinkActive="active-link">➕ Add Task</a>
+  <a routerLink="/list" routerLinkActive="active-link">📋 Task List</a>
+</nav>
+
+<router-outlet></router-outlet>
