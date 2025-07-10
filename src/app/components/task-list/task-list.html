@@ -1,7 +1,10 @@
 <ul *ngIf="taskList.length; else loading">
   <li *ngFor="let task of taskList">
     <input type="checkbox" [(ngModel)]="task.completed" />
-    <p [ngClass]="{ 'completed': task.completed }">{{ task.title }}</p>
+    <p [ngClass]="{ 'completed': task.completed }">
+      {{ task.title | titlecase }} <br />
+      <span>{{ task.completed | status }}</span>
+    </p>
   </li>
 </ul>
 
